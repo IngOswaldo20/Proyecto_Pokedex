@@ -1,0 +1,113 @@
+form {
+    width: 200px;
+    margin: 20px auto;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+}
+
+body{
+    background-color: bisque;
+    background-image: url("../img/fondoPokedex.jpg");
+}
+
+.poke-card {
+    position: relative;
+    height: fit-content;
+    font-family: 'Roboto Mono', monospace;
+    max-width: 300px;
+    border-radius: 4px;
+    color: #000;
+    text-align: center;
+    padding: 10px;
+    margin: 0 auto;
+    background-color: #FFF;
+    border: 1px solid black;
+}
+
+.poke-card::before {
+    content: '';
+    background: radial-gradient(black 33%, transparent 33%);
+    background-size: 3px 3px;
+    border-radius: 4px;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    z-index: -1;
+}
+
+.img-container {
+    position: relative;
+    width: 180px;
+    margin: 10px auto;
+}
+
+.poke-stats div {
+    display: flex;
+    justify-content: space-between;
+    align-content: space-between;
+    padding: 5px;
+    font-size: 18px;
+}
+
+.poke-types div {
+    padding: 5px;
+    margin: 5px;
+    border-radius: 4px;
+    border: 1px dashed black;
+}
+
+.poke-img {
+    width: 180px;
+    border-radius: 50%;
+}
+
+#container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    justify-content: center;
+}
+
+button {
+    width: 250px;
+    height: 73px;
+    border: none;
+    margin-bottom: 10px;
+    margin-left: 200px;
+    margin-right: 200px;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+#button1 {
+    background-image: url("../img/luchaboton.png");
+}
+
+#button2 {
+    background-image: url("../img/menuboton.png");
+}
+
+button {
+    transition: all 0.3s ease;
+}
+
+#button1:hover {
+    transform: rotate(360deg);
+    background-color: #f0785a;
+    /* Cambia el color de fondo al pasar el cursor */
+
+}
+
+#button2:hover {
+    transform: rotate(-360deg);
+    background-color: #5ee643;
+    /* Cambia el color de fondo al pasar el cursor */
+
+}

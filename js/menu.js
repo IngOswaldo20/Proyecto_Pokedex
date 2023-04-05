@@ -1,6 +1,6 @@
 
 var menuAudio = document.getElementById("menuAudio");
-menuAudio.volume = 0.3; // establece el volumen a la mitad del máximo
+menuAudio.volume = 0.3; 
 
 const button1 = document.getElementById('button1');
 const button2 = document.getElementById('button2');
