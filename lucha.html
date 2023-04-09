@@ -1,13 +1,44 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style/lucha.css" />
     <title>Lucha</title>
 </head>
 <body>
     <audio id="menuAudio" src="./music/pelea.mp3" autoplay loop></audio>
-    <script src="./js/menu.js"></script>
+    
+    <div id="container">
+        <button id="button1"></button>
+        <button id="button2"></button>
+    </div>
+
+    <label for="pokemonInput">Ingresa el nombre o número del Pokémon:</label>
+  <input type="text" id="pokemonInput">
+  <button id="buscarButton">Buscar</button>
+  <div id="resultado"></div>
+
+  <script type="module">
+    import { getPokemonInfo } from './js/lucha.js';
+
+    const pokemonInput = document.getElementById('pokemonInput');
+    const buscarButton = document.getElementById('buscarButton');
+    const resultado = document.getElementById('resultado');
+
+    buscarButton.addEventListener('click', () => {
+      const pokemon = pokemonInput.value.toLowerCase();
+
+      getPokemonInfo(pokemon)
+        .then(({ vida, ataque , nombre}) => {
+          resultado.textContent = `Vida: ${vida}, Ataque: ${ataque} , Nombre: ${nombre}`;
+        })
+        .catch(error => {
+          resultado.textContent = `Error: ${error.message}`;
+        });
+    });
+  </script>
+    <script src="./js/lucha.js"></script>
 </body>
 </html>

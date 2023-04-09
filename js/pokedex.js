@@ -17,7 +17,7 @@ const typeColors = {
     grass: '#4A9681',
     psychic: '#FFC6D9',
     ghost: '#561D25',
-    bug: '#A2FAA3',
+    bug: '#91f05a',
     poison: '#795663',
     ground: '#D2B074',
     dragon: '#DA627D',
@@ -69,6 +69,7 @@ const renderPokemonTypes = types => {
 const renderPokemonStats = stats => {
     pokeStats.innerHTML = '';
     stats.forEach(stat => {
+        
         const statElement = document.createElement("div");
         const statElementName = document.createElement("div");
         const statElementAmount = document.createElement("div");
@@ -81,8 +82,8 @@ const renderPokemonStats = stats => {
 }
 
 const renderNotFound = () => {
-    pokeName.textContent = 'No encontrado';
-    pokeImg.setAttribute('src', '../img/poke-shadow.png');
+    pokeName.textContent = 'Ese pokemon no existe';
+    pokeImg.setAttribute('src', '../img/cualpoke.png');
     pokeImg.style.background =  '#fff';
     pokeTypes.innerHTML = '';
     pokeStats.innerHTML = '';
