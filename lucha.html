@@ -9,16 +9,39 @@
 </head>
 <body>
     <audio id="menuAudio" src="./music/pelea.mp3" autoplay loop></audio>
-    
+  
+    <footer>
     <div id="container">
         <button id="button1"></button>
         <button id="button2"></button>
     </div>
+  </footer>
 
-    <label for="pokemonInput">Ingresa el nombre o número del Pokémon:</label>
-  <input type="text" id="pokemonInput">
+  <input type="text" id="pokemonInput" placeholder="Elige a tu pokemon">
   <button id="buscarButton">Buscar</button>
   <div id="resultado"></div>
+  <br>
+  <input type="text" id="pokemonInput2" placeholder="Elige el pokemon rival">
+  <button id="buscarButton2">Buscar</button>
+  <div id="resultado2"></div>
+
+  <div class="principal">
+    <article>
+        <h2>Tú pokemon</h2>
+        <img data-poke-img class="poke-img" src="./img/poke-shadow.png"/>
+        <p id="1p"></p>
+    </article>
+    
+    <article>
+        <h2>Pokemon rival</h2>
+        <img data-poke-img2 class="poke-img" src="./img/poke-shadow.png"/>
+        <p id="2p"></p>
+    </article>
+  </div>
+<div class="btpelea">
+  <button id="pelear"></button>
+</div>
+  
 
   <script type="module">
     import { getPokemonInfo } from './js/lucha.js';
@@ -26,19 +49,40 @@
     const pokemonInput = document.getElementById('pokemonInput');
     const buscarButton = document.getElementById('buscarButton');
     const resultado = document.getElementById('resultado');
-
+    
     buscarButton.addEventListener('click', () => {
       const pokemon = pokemonInput.value.toLowerCase();
 
       getPokemonInfo(pokemon)
         .then(({ vida, ataque , nombre}) => {
-          resultado.textContent = `Vida: ${vida}, Ataque: ${ataque} , Nombre: ${nombre}`;
+          document.getElementById("1p").innerHTML  = `Nombre: ${nombre}  <br> Ataque: ${ataque} ⚔ <br> Vida: ${vida} ♥`;
+          
         })
         .catch(error => {
           resultado.textContent = `Error: ${error.message}`;
         });
     });
   </script>
+
+<script type="module">
+  import { getPokemonInfo2 } from './js/lucha.js';
+
+  const pokemonInput2 = document.getElementById('pokemonInput2');
+  const buscarButton2 = document.getElementById('buscarButton2');
+  const resultado2 = document.getElementById('resultado2');
+  
+  buscarButton2.addEventListener('click', () => {
+    const pokemon2 = pokemonInput2.value.toLowerCase();
+
+    getPokemonInfo2(pokemon2)
+      .then(({ vida, ataque , nombre}) => {
+        document.getElementById("2p").innerHTML  = `Nombre: ${nombre}  <br> Ataque: ${ataque} ⚔ <br> Vida: ${vida} ♥`;
+      })
+      .catch(error => {
+        resultado2.textContent = `Error: ${error.message}`;
+      });
+  });
+</script>
     <script src="./js/lucha.js"></script>
 </body>
 </html>
