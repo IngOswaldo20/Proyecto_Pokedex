@@ -1,88 +1,181 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style/lucha.css" />
-    <title>Lucha</title>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style/lucha.css" />
+  <title>Lucha</title>
 </head>
+
 <body>
-    <audio id="menuAudio" src="./music/pelea.mp3" autoplay loop></audio>
-  
-    <footer>
+  <audio id="menuAudio" src="./music/pelea.mp3" autoplay loop></audio>
+  <audio id="AtacarAU" src="./music/golpe.mp3"></audio>
+  <audio id="CurarAU" src="./music/curar.mp3"></audio>
+  <audio id="campana" src="./music/ring.mp3"></audio>
+  <audio id="win" src="./music/victoria.mp3"></audio>
+  <audio id="lose" src="./music/derrota.mp3"></audio>
+
+  <footer>
     <div id="container">
-        <button id="button1"></button>
-        <button id="button2"></button>
+      <button id="button1"></button>
+      <button id="button2"></button>
     </div>
   </footer>
 
-  <input type="text" id="pokemonInput" placeholder="Elige a tu pokemon">
+  <input type="text" id="pokemonInput" placeholder="Elige a tu pokemon" />
   <button id="buscarButton">Buscar</button>
   <div id="resultado"></div>
-  <br>
-  <input type="text" id="pokemonInput2" placeholder="Elige el pokemon rival">
+  <br />
+  <input type="text" id="pokemonInput2" placeholder="Elige el pokemon rival" />
   <button id="buscarButton2">Buscar</button>
   <div id="resultado2"></div>
 
   <div class="principal">
     <article>
-        <h2>Tú pokemon</h2>
-        <img data-poke-img class="poke-img" src="./img/poke-shadow.png"/>
-        <p id="1p"></p>
+      <h2>Tú pokemon</h2>
+      <img data-poke-img class="poke-img" src="./img/poke-shadow.png" />
+      <p id="1p"></p>
     </article>
-    
+
     <article>
-        <h2>Pokemon rival</h2>
-        <img data-poke-img2 class="poke-img" src="./img/poke-shadow.png"/>
-        <p id="2p"></p>
+      <h2>Pokemon rival</h2>
+      <img data-poke-img2 class="poke-img" src="./img/poke-shadow.png" />
+      <p id="2p"></p>
     </article>
   </div>
-<div class="btpelea">
-  <button id="pelear"></button>
-</div>
-  
+  <div class="btpelea">
+    <button id="pelear" title="Escoge los dos pokemons"></button>
+  </div>
+
+  <div class="Botones">
+    <button id="Atacar" style="display: none;" title="Atacar"></button>
+    <button id="Curar" style="display: none;" title="Curar"></button>
+
+  </div>
+
+  <!--Oponente  -->
+  <script type="module">
+    var cora;
+    import { getPokemonInfo2 } from "./js/lucha.js";
+
+    const pokemonInputA = document.getElementById("pokemonInput2");
+    const atacar = document.getElementById("Atacar");
+    const resultadoA = document.getElementById("resultado2");
+
+    Atacar.addEventListener("click", () => {
+      const pokemon = pokemonInputA.value.toLowerCase();
+      var golpe = Math.floor(Math.random() * 31);
+      getPokemonInfo2(pokemon)
+        .then(({ vida, ataque, nombre }) => {
+          cora =vida-golpe;
+          document.getElementById("2p").innerHTML = `Nombre: ${nombre}  <br> Ataque: ${ataque} ⚔ <br> Vida: ${cora} ♥`;
+          if(cora <= 0){
+            alert("Has ganado");
+            var ganar = document.getElementById("win");
+            window.location.reload();
+            ganar.play();
+          }
+        })
+        .catch((error) => {
+          resultadoA.textContent = `Error: ${error.message}`;
+        });
+    });
+  </script>
+
+ <!--Jugador  -->
+ <script type="module">
+  import { getPokemonInfo } from "./js/lucha.js";
+
+  const pokemonInputP = document.getElementById("pokemonInput");
+  const atacado = document.getElementById("Atacar");
+  const resultadoP = document.getElementById("resultado");
+
+  Atacar.addEventListener("click", () => {
+    const pokemon = pokemonInput.value.toLowerCase();
+    var golpe = Math.floor(Math.random() * 31);
+    getPokemonInfo(pokemon)
+      .then(({ vida, ataque, nombre }) => {
+        vida=vida-golpe;
+        document.getElementById("1p").innerHTML = `Nombre: ${nombre}  <br> Ataque: ${ataque} ⚔ <br> Vida: ${vida} ♥`;
+        if(vida <= 0){
+            alert("Has perdido");
+            var perder = document.getElementById("lose");
+            window.location.reload();
+            perder.play();
+          }
+      })
+      .catch((error) => {
+        resultado.textContent = `Error: ${error.message}`;
+      });
+  });
+</script>
+
+ <!--Curar  -->
+ <script type="module">
+  import { getPokemonInfo } from "./js/lucha.js";
+
+  const pokemonInputC = document.getElementById("pokemonInput");
+  const curar = document.getElementById("Curar");
+  const resultadoC = document.getElementById("resultado");
+
+  curar.addEventListener("click", () => {
+    const pokemon = pokemonInput.value.toLowerCase();
+    getPokemonInfo(pokemon)
+      .then(({ vida, ataque, nombre }) => {
+        document.getElementById("1p").innerHTML = `Nombre: ${nombre}  <br> Ataque: ${ataque} ⚔ <br> Vida: ${vida+10} ♥`;
+        
+      })
+      .catch((error) => {
+        resultado.textContent = `Error: ${error.message}`;
+      });
+  });
+</script>
 
   <script type="module">
-    import { getPokemonInfo } from './js/lucha.js';
+    import { getPokemonInfo } from "./js/lucha.js";
 
-    const pokemonInput = document.getElementById('pokemonInput');
-    const buscarButton = document.getElementById('buscarButton');
-    const resultado = document.getElementById('resultado');
-    
-    buscarButton.addEventListener('click', () => {
+    const pokemonInput = document.getElementById("pokemonInput");
+    const buscarButton = document.getElementById("buscarButton");
+    const resultado = document.getElementById("resultado");
+
+    buscarButton.addEventListener("click", () => {
       const pokemon = pokemonInput.value.toLowerCase();
 
       getPokemonInfo(pokemon)
-        .then(({ vida, ataque , nombre}) => {
-          document.getElementById("1p").innerHTML  = `Nombre: ${nombre}  <br> Ataque: ${ataque} ⚔ <br> Vida: ${vida} ♥`;
-          
+        .then(({ vida, ataque, nombre }) => {
+          document.getElementById("1p").innerHTML = `Nombre: ${nombre}  <br> Ataque: ${ataque} ⚔ <br> Vida: ${vida} ♥`;
         })
-        .catch(error => {
+        .catch((error) => {
           resultado.textContent = `Error: ${error.message}`;
         });
     });
   </script>
 
-<script type="module">
-  import { getPokemonInfo2 } from './js/lucha.js';
+  <script type="module">
+    import { getPokemonInfo2 } from "./js/lucha.js";
 
-  const pokemonInput2 = document.getElementById('pokemonInput2');
-  const buscarButton2 = document.getElementById('buscarButton2');
-  const resultado2 = document.getElementById('resultado2');
-  
-  buscarButton2.addEventListener('click', () => {
-    const pokemon2 = pokemonInput2.value.toLowerCase();
+    const pokemonInput2 = document.getElementById("pokemonInput2");
+    const buscarButton2 = document.getElementById("buscarButton2");
+    const resultado2 = document.getElementById("resultado2");
 
-    getPokemonInfo2(pokemon2)
-      .then(({ vida, ataque , nombre}) => {
-        document.getElementById("2p").innerHTML  = `Nombre: ${nombre}  <br> Ataque: ${ataque} ⚔ <br> Vida: ${vida} ♥`;
-      })
-      .catch(error => {
-        resultado2.textContent = `Error: ${error.message}`;
-      });
-  });
-</script>
-    <script src="./js/lucha.js"></script>
+    buscarButton2.addEventListener("click", () => {
+      const pokemon2 = pokemonInput2.value.toLowerCase();
+
+      getPokemonInfo2(pokemon2)
+        .then(({ vida, ataque, nombre }) => {
+          document.getElementById(
+            "2p"
+          ).innerHTML = `Nombre: ${nombre}  <br> Ataque: ${ataque} ⚔ <br> Vida: ${vida} ♥`;
+        })
+        .catch((error) => {
+          resultado2.textContent = `Error: ${error.message}`;
+        });
+    });
+  </script>
+
+  <script src="./js/lucha.js"></script>
 </body>
+
 </html>
