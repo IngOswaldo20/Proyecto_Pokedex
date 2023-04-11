@@ -99,7 +99,7 @@ button1.addEventListener('click', function () {
 });
 
 button2.addEventListener('click', function () {
-    window.location.href = "inicio.html";
+    window.location.href = "index.html";
 });
 
 var menuAudio = document.getElementById("menuAudio");
